@@ -1,0 +1,67 @@
+---
+title: "Rmd Exercise Template"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The question you are answering
+
+You use the `##` to create a header. Use the header to indicate the question you are answering. After the header, in this space here, annotate your answer, telling us what you did.
+
+```{r}
+# load data
+gapminder <- read.csv(here::here("data/gapminder5.csv"), stringsAsFactors=FALSE)
+```
+
+```{r}
+# if statement
+year <- 2002
+if(any(gapminder$year == year)){
+   print(paste("Record(s) for the year",year,"found."))
+} else {
+  print(paste("No records for year",year))
+}
+```
+
+```{r}
+# loop and if statement_1
+threshold = mean(gapminder$pop)
+for (i in unique(gapminder$country)) {
+   country_mean <- mean(gapminder$pop[gapminder$country==i])
+   if (country_mean < threshold) {
+     mean_le <- mean(gapminder$lifeExp[gapminder$country==i])
+     print(paste("Mean Life Expectancy in", i, "is", mean_le))
+   } 
+}
+```
+```{r}
+# loop and if statement_2
+for (i in unique(gapminder$continent)){
+    tmp <- mean(gapminder$lifeExp[gapminder$continent==i])
+    
+    if (tmp < 50){
+        print(paste("Average Life Expectancy in", i, "is less than", 50))
+    }
+    else if (tmp > 50 & tmp < 70){
+        print(paste("Average Life Expectancy in", i, "is between", 50, "and", 70))
+    }
+    else {
+        print(paste("Average Life Expectancy in", i, "is greater than", 70))
+    }
+}
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r another chunk name}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
