@@ -56,12 +56,46 @@ for (i in unique(gapminder$continent)){
 
 ```
 
+```{r}
+# Exercise: Write Functions_1
+data_col_class <- function(df) {
+  for (i in names(df)) {
+    print(paste0(i, ": ", mode(df[, i])))
+  }
+}
+data_col_class(gapminder)
+```
+
+```{r}
+# Exercise: Write Functions_2
+mean_and_SD <- function(arr, medianflag=FALSE) { 
+    if (medianflag) {print(paste0("Median: ", median(arr)))}
+    print(paste0("Mean: ", mean(arr)))
+    print(paste0("Standard Deviation: ", sd(arr)))
+}
+le <- gapminder$lifeExp
+mean_and_SD(le, medianflag = F)
+mean_and_SD(le, medianflag = T)
+```
+
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r another chunk name}
-plot(pressure)
+```{r}
+# Analyzing the relationship_1
+plot(log(gapminder$gdpPercap)~log(gapminder$lifeExp))
+m <- lm(log(gapminder$gdpPercap)~log(gapminder$lifeExp))
+abline(m)
+
+ggplot(aes(x = log(gdpPercap), y = log(lifeExp)), data = gapminder) + geom_point(alpha = 1/2) + geom_smooth(method = 'lm', color = 'red')
+```
+
+```{r}
+# Analyzing the relationship_2
+library(ggthemes)
+library(ggplot2)
+ggplot(aes(x = log(gdpPercap), y = log(lifeExp)), data = gapminder) + geom_point(alpha = 1/2) + geom_smooth(method = 'lm', color = 'red') + facet_wrap(~gapminder$continent)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
